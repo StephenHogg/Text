@@ -47,8 +47,8 @@ def parseArgs():
     
     
 def tokenCleaner(tweet):
-	# This function splits a tweet into tokens and removes user handles, hashtags and websites
-	# from the tweet
+    # This function splits a tweet into tokens and removes user handles, hashtags and websites
+    # from the tweet
     try:
         tweet = tweet.lower()
         tokens = tokenizer.tokenize(tweet)
@@ -63,8 +63,8 @@ def tokenCleaner(tweet):
     
 def create_embeddings(inputFilename, **params):
     # Generator class allows us to build word2vec embeddings without
-	# reading the full training file into memory
-	class SentenceGenerator(object):
+    # reading the full training file into memory
+    class SentenceGenerator(object):
         def __init__(self, filename):
             self.fname = filename
     
@@ -83,9 +83,9 @@ def create_embeddings(inputFilename, **params):
 
 # Randomise the row order
 def shuffleFile(filename):
-	# Open the source file and assign every row a random number
-	# Then sort the rows by the random numbers, thereby shuffling it
-	# Then write the file back to disk, without the header row
+    # Open the source file and assign every row a random number
+    # Then sort the rows by the random numbers, thereby shuffling it
+    # Then write the file back to disk, without the header row
     with open(filename,'r', encoding="utf8") as source:
         # Skip the header line, we won't need this in any subsequent file
         next(source)
