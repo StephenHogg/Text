@@ -75,7 +75,7 @@ def create_embeddings(inputFilename, **params):
 
     sentences = SentenceGenerator(inputFilename)
 	
-	# Generate the word2vec model and return it
+    # Generate the word2vec model and return it
     model = Word2Vec(sentences, **params)
     return(model)
      
