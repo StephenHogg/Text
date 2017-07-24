@@ -37,7 +37,7 @@ tokenizer = TweetTokenizer()
 
 
 def parseArgs():
-    # Get the input arguments and check they're not mangled
+    # Get the input arguments 
     parser = argparse.ArgumentParser('Binary Sentiment Classifier')
     parser.add_argument('--inputfile', help='Fully-qualified path for input file', type=str, required=True)
     parser.add_argument('--outputfile', help='Fully-qualified path to write model to', type=str, default = os.getcwd() + '\\model.h5')
@@ -47,6 +47,8 @@ def parseArgs():
     
     
 def tokenCleaner(tweet):
+	# This function splits a tweet into tokens and removes user handles, hashtags and websites
+	# from the tweet
     try:
         tweet = tweet.lower()
         tokens = tokenizer.tokenize(tweet)
@@ -60,7 +62,9 @@ def tokenCleaner(tweet):
     
     
 def create_embeddings(inputFilename, **params):
-    class SentenceGenerator(object):
+    # Generator class allows us to build word2vec embeddings without
+	# reading the full training file into memory
+	class SentenceGenerator(object):
         def __init__(self, filename):
             self.fname = filename
     
@@ -70,7 +74,8 @@ def create_embeddings(inputFilename, **params):
                 yield list(tokenCleaner(line))
 
     sentences = SentenceGenerator(inputFilename)
-
+	
+	# Generate the word2vec model and return it
     model = Word2Vec(sentences, **params)
     return(model)
      
@@ -78,6 +83,9 @@ def create_embeddings(inputFilename, **params):
 
 # Randomise the row order
 def shuffleFile(filename):
+	# Open the source file and assign every row a random number
+	# Then sort the rows by the random numbers, thereby shuffling it
+	# Then write the file back to disk, without the header row
     with open(filename,'r', encoding="utf8") as source:
         # Skip the header line, we won't need this in any subsequent file
         next(source)
